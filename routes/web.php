@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminContactController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseContentController;
 
@@ -63,7 +64,10 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('auth')->get('/dashboard', [AuthController::class, 'showDashboard'])->name('dashboard');
+Route::middleware(['auth','dashboard.review'])->name('dashboard.')->group(function(){
+    Route::get('/dashboard', [AuthController::class, 'showDashboard'])->name('index');
+    Route::get('/dashboard/contact/{contact}',  [AuthController::class, 'show'])->name('show');
+});
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.admin.email'])->group(function () {
@@ -71,6 +75,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.admin.email']
 });
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.admin.email'])->group(function () {
+    
     Route::resource('courses', CourseController::class)->except(['show']);
     // Gestión del índice (CourseContent) bajo un curso
     Route::prefix('courses/{course}/contents')->name('courses.contents.')->group(function () {
@@ -78,8 +83,24 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.admin.email']
         Route::put('/{content}',[CourseContentController::class, 'update'])->name('update');     // editar
         Route::delete('/{content}', [CourseContentController::class, 'destroy'])->name('destroy'); // eliminar
         Route::post('/reorder', [CourseContentController::class, 'reorder'])->name('reorder');   // reordenar hermanos
+
     });
+
+    Route::prefix('contact')
+        ->name('contact.')
+        ->group(function () {
+            Route::get('/', [AdminContactController::class, 'index'])
+                ->name('index');
+
+            Route::get('/{contact}', [AdminContactController::class, 'show'])
+                ->name('show');
+
+            Route::patch('/{contact}/status', [AdminContactController::class, 'updateStatus'])
+                ->name('updateStatus');
+        });
+    
 });
+
 
 
 

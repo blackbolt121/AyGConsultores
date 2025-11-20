@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Contact;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -26,9 +27,27 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function showDashboard()
+    public function showDashboard(Request $request)
     {
-        return view('dashboard');
+        $user = $request->user();   // usuario autenticado
+        $email = $user->email;      // usamos su correo
+
+        $contacts = Contact::where('email', $email)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('dashboard', [
+            'contacts' => $contacts,
+            'user'     => $user,
+        ]);
+            
+    }
+
+    public function show(Contact $contact)
+    {
+        return view('contact.read', [
+            'contact' => $contact,
+        ]);
     }
 
     public function register(Request $request)
@@ -53,7 +72,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'Usuario registrado y autenticado'], 201);
         }
 
-        return redirect()->intended(route('dashboard'))
+        return redirect()->intended(route('dashboard.index'))
             ->with('status', '¡Bienvenido, ' . $user->name . '!');
     }
 
@@ -74,7 +93,7 @@ class AuthController extends Controller
             }
 
             // Redirige a donde el usuario intentaba ir (o al dashboard/home)
-            return redirect()->intended(route('dashboard'));
+            return redirect()->intended(route('dashboard.index'));
         }
 
         if ($request->wantsJson()) {
