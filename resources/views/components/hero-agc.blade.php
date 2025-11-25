@@ -30,7 +30,7 @@
     ],
 ])
 
-<section class="bg-gradient-to-br from-primary/5 via-secondary/5 to-purple-50 py-20 flex items-center">
+<section class="bg-gradient-to-br from-primary/5 via-secondary/5 to-purple-50 md:py-20 flex items-center">
   <div class="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
     <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
       {{-- Columna izquierda --}}

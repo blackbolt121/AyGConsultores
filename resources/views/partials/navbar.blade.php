@@ -4,9 +4,12 @@
       <div class="relative w-10 h-10 overflow-hidden transform transition-transform duration-300 group-hover:scale-110">
         <img src="{{ asset('logo.svg') }}" alt="Logo" class="transition-transform duration-500 group-hover:rotate-12" width="40" height="40">
       </div>
-      <span class="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">A&amp;G Consultores</span>
+      <span class="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
+        A&G Consultores
+      </span>
     </a>
 
+    {{-- MENÚ DESKTOP --}}
     <nav class="hidden md:flex gap-6">
       <a href="{{ route('home') }}" class="text-sm font-medium relative group">
         <span class="relative z-10 text-gray-700 group-hover:text-primary transition-colors">Inicio</span>
@@ -29,41 +32,48 @@
     <div class="flex items-center gap-4">
       @auth
         <form
-         method ="POST"
-         action ="{{ route('logout', absolute: false) }}"
-         class="hidden md:flex items-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition">
-         @csrf
-        <svg xmlns="http://www.w3.org/2000/svg"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke-width="2"
-             stroke="currentColor"
-             class="w-5 h-5 mr-2">
-          <path d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4z"/>
-          <path d="M4 20c0-2.2 3.6-4 8-4s8 1.8 8 4v1H4v-1z"/>
-        </svg>
-        <button type="submit">Cerrar Sesión</button>
-      </form>
+          method="POST"
+          action="{{ route('logout', absolute: false) }}"
+          class="hidden md:flex items-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+        >
+          @csrf
+          <svg xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 24 24"
+               stroke-width="2"
+               stroke="currentColor"
+               class="w-5 h-5 mr-2">
+            <path d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4z"/>
+            <path d="M4 20c0-2.2 3.6-4 8-4s8 1.8 8 4v1H4v-1z"/>
+          </svg>
+          <button type="submit">Cerrar Sesión</button>
+        </form>
       @endauth
+
       @guest
         <a 
-         href ="{{ route('login.form') }}"
-         class="hidden md:flex items-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             fill="none"
-             viewBox="0 0 24 24"
-             stroke-width="2"
-             stroke="currentColor"
-             class="w-5 h-5 mr-2">
+          href="{{ route('login.form') }}"
+          class="hidden md:flex items-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 24 24"
+               stroke-width="2"
+               stroke="currentColor"
+               class="w-5 h-5 mr-2">
             <path d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4z"/>
             <path d="M4 20c0-2.2 3.6-4 8-4s8 1.8 8 4v1H4v-1z"/>
           </svg>
           Iniciar Sesión
         </a>
       @endguest
-      <button class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border"
-              aria-label="Abrir menú" type="button">
-        <!-- Ícono menú (Lucide "menu" en SVG inline) -->
+
+      {{-- BOTÓN MENÚ MÓVIL --}}
+      <button id="mobile-menu-button"
+              class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border"
+              aria-label="Abrir menú"
+              aria-expanded="false"
+              type="button">
         <svg xmlns="http://www.w3.org/2000/svg"
              viewBox="0 0 24 24"
              fill="none"
@@ -79,4 +89,63 @@
       </button>
     </div>
   </div>
+
+  {{-- MENÚ MÓVIL --}}
+  <nav id="mobile-menu" class="md:hidden hidden border-t bg-white">
+    <div class="px-4 pt-2 pb-4 space-y-2">
+      <a href="{{ route('home') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+        Inicio
+      </a>
+      <a href="{{ route('courses.index') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+        Cursos
+      </a>
+      <a href="{{ route('about') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+        Nosotros
+      </a>
+      <a href="{{ route('contacto.contacto') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+        Contacto
+      </a>
+
+      @auth
+        <form
+          method="POST"
+          action="{{ route('logout', absolute: false) }}"
+          class="pt-2"
+        >
+          @csrf
+          <button
+            type="submit"
+            class="w-full flex items-center justify-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+          >
+            Cerrar Sesión
+          </button>
+        </form>
+      @endauth
+
+      @guest
+        <a
+          href="{{ route('login.form') }}"
+          class="mt-2 w-full flex items-center justify-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+        >
+          Iniciar Sesión
+        </a>
+      @endguest
+    </div>
+  </nav>
 </header>
+
+{{-- Script simple para togglear el menú móvil (ponlo al final del layout o de la vista) --}}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn  = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+
+    if (btn && menu) {
+      btn.addEventListener('click', () => {
+        const isOpen = !menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        btn.setAttribute('aria-expanded', String(!isOpen));
+      });
+    }
+  });
+</script>
