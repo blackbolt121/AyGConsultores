@@ -56,8 +56,6 @@ class AccountController extends Controller
             'temporary_password_set_by' => null,
         ])->save();
 
-        return redirect()
-            ->intended(route('dashboard.index'))
-            ->with('status', 'Contrasena actualizada.');
+        return redirect()->back()->with('status', 'Contrasena actualizada.');
     }
 }

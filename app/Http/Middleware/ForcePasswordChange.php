@@ -24,17 +24,21 @@ class ForcePasswordChange
             return $next($request);
         }
 
+        // We allow GET pages to render, but we block mutating requests until the password is updated.
         $routeName = $request->route()?->getName();
-
-        $isAccountRoute = is_string($routeName) && str_starts_with($routeName, 'account.');
         $isLogoutRoute = $routeName === 'logout';
+        $isPasswordUpdateRoute = $routeName === 'account.password.update';
 
-        if ($isAccountRoute || $isLogoutRoute) {
+        if ($request->isMethod('get') || $request->isMethod('head')) {
+            return $next($request);
+        }
+
+        if ($isLogoutRoute || $isPasswordUpdateRoute) {
             return $next($request);
         }
 
         return redirect()
-            ->route('account.edit')
+            ->back()
             ->with('status', 'Debes actualizar tu contrasena para continuar.');
     }
 }

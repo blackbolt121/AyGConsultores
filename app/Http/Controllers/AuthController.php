@@ -88,13 +88,6 @@ class AuthController extends Controller
         if (Auth::guard('web')->attempt($credentials, $remember)) {
             $request->session()->regenerate();
 
-            $user = $request->user();
-            if ($user && $user->requiresPasswordChange()) {
-                return redirect()
-                    ->route('account.edit')
-                    ->with('status', 'Debes actualizar tu contrasena para continuar.');
-            }
-
             if ($request->wantsJson()) {
                 return response()->json(['message' => 'Login exitoso']);
             }
