@@ -78,78 +78,39 @@
 
         <div class="w-px h-4 bg-slate-200 mx-1"></div>
 
-        {{-- Editar toggle --}}
-        <details class="group relative">
-          <summary class="cursor-pointer p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors list-none" title="Editar">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-          </summary>
-          <div class="absolute right-0 top-full mt-2 w-screen max-w-lg z-10 bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
-            <h4 class="text-sm font-bold text-slate-800 mb-4">Editar Contenido</h4>
-            <form action="{{ route('admin.courses.contents.update', [$course, $item]) }}" method="POST" class="grid grid-cols-1 gap-4">
-              @csrf @method('PUT')
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Título *</label>
-                <input type="text" name="title" value="{{ old('title', $item->title) }}" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none" required>
-              </div>
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo</label>
-                  <select name="type" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none">
-                    @foreach($types as $val => $label)
-                      <option value="{{ $val }}" @selected($item->type === $val)>{{ $label }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div>
-                  <label class="block text-xs font-semibold text-slate-600 mb-1">Mover a</label>
-                  <select name="parent_id" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none">
-                    <option value="" @selected(!$item->parent_id)>Raíz</option>
-                    @foreach($course->rootContents as $rootOption)
-                      <option value="{{ $rootOption->id }}" @selected($item->parent_id === $rootOption->id)>{{ $rootOption->title }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Resumen Corto</label>
-                <textarea name="summary" rows="2" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none">{{ old('summary', $item->summary) }}</textarea>
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Contenido HTML / Text</label>
-                <textarea name="body" rows="4" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none font-mono text-xs">{{ old('body', $item->body) }}</textarea>
-              </div>
-              <div class="flex justify-end pt-2">
-                <button class="rounded-lg bg-indigo-600 px-4 py-2 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">Guardar</button>
-              </div>
-            </form>
-          </div>
-        </details>
+        {{-- Editar (modal) --}}
+        <button
+          type="button"
+          class="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+          title="Editar"
+          data-modal="edit"
+          data-payload='{{ json_encode([
+            "action" => route("admin.courses.contents.update", [$course, $item]),
+            "title" => $item->title,
+            "type" => $item->type,
+            "parent_id" => $item->parent_id,
+            "summary" => $item->summary,
+            "body" => $item->body,
+            "label" => trim(($item->numbering ?? "")." ".$item->title),
+          ], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) }}'
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+        </button>
 
-        {{-- Agregar hijo toggle --}}
-        <details class="group relative">
-          <summary class="cursor-pointer p-1.5 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 transition-colors list-none" title="Añadir Sub-contenido">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
-          </summary>
-          <div class="absolute right-0 top-full mt-2 w-screen max-w-md z-10 bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
-            <h4 class="text-sm font-bold text-slate-800 mb-4">Añadir dentro de "{{ $item->title }}"</h4>
-            <form action="{{ route('admin.courses.contents.store', $course) }}" method="POST" class="grid grid-cols-1 gap-4">
-              @csrf <input type="hidden" name="parent_id" value="{{ $item->id }}">
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Título *</label>
-                <input type="text" name="title" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm outline-none" required>
-              </div>
-              <div>
-                <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo</label>
-                <select name="type" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm outline-none">
-                  @foreach($types as $val => $label) <option value="{{ $val }}">{{ $label }}</option> @endforeach
-                </select>
-              </div>
-              <div class="flex justify-end pt-2">
-                <button class="rounded-lg bg-emerald-600 px-4 py-2 text-white text-sm font-medium hover:bg-emerald-700 transition-colors">Añadir Sub-contenido</button>
-              </div>
-            </form>
-          </div>
-        </details>
+        {{-- Agregar sub-contenido (modal) --}}
+        <button
+          type="button"
+          class="p-1.5 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 transition-colors"
+          title="Añadir Sub-contenido"
+          data-modal="add"
+          data-payload='{{ json_encode([
+            "action" => route("admin.courses.contents.store", $course),
+            "parent_id" => $item->id,
+            "parent_title" => $item->title,
+          ], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) }}'
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+        </button>
 
         <div class="w-px h-4 bg-slate-200 mx-1"></div>
 
