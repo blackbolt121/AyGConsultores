@@ -61,7 +61,6 @@ class AccountTest extends TestCase
 
         $this->actingAs($user)
             ->put(route('account.password.update'), [
-                'current_password' => 'temp-pass',
                 'password' => 'new-password-123',
                 'password_confirmation' => 'new-password-123',
             ])
@@ -70,6 +69,21 @@ class AccountTest extends TestCase
         $user->refresh();
         $this->assertFalse($user->must_change_password);
         $this->assertTrue(Hash::check('new-password-123', $user->password));
+    }
+
+    public function test_user_password_change_requires_current_password_when_not_forced(): void
+    {
+        $user = User::factory()->create([
+            'password' => Hash::make('password'),
+            'must_change_password' => false,
+        ]);
+
+        $this->actingAs($user)
+            ->put(route('account.password.update'), [
+                'password' => 'new-password-123',
+                'password_confirmation' => 'new-password-123',
+            ])
+            ->assertSessionHasErrors(['current_password']);
     }
 
     public function test_user_is_blocked_from_dashboard_until_password_change(): void

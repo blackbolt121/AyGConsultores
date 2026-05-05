@@ -39,14 +39,16 @@
                   @csrf
                   @method('PUT')
 
-                  <div>
-                    <label for="fp_current_password" class="block text-sm font-medium text-gray-700 mb-1">Contrasena actual</label>
-                    <input id="fp_current_password" name="current_password" type="password" autocomplete="current-password" required
-                      class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/30 transition">
-                    @error('current_password')
-                      <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                  </div>
+                  @if (!Auth::user()->requiresPasswordChange())
+                    <div>
+                      <label for="fp_current_password" class="block text-sm font-medium text-gray-700 mb-1">Contrasena actual</label>
+                      <input id="fp_current_password" name="current_password" type="password" autocomplete="current-password" required
+                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring focus:ring-primary/30 transition">
+                      @error('current_password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                      @enderror
+                    </div>
+                  @endif
 
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -88,8 +90,10 @@
             if (!modal) return;
             modal.classList.remove('hidden');
             document.body.classList.add('overflow-hidden');
-            const input = document.getElementById('fp_current_password');
-            if (input) input.focus();
+            const current = document.getElementById('fp_current_password');
+            const next = document.getElementById('fp_password');
+            if (current) current.focus();
+            else if (next) next.focus();
 
             const logoutBtn = modal.querySelector('[data-force-logout]');
             const logoutForm = document.getElementById('force-logout-form');

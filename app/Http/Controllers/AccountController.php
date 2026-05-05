@@ -43,12 +43,20 @@ class AccountController extends Controller
 
     public function updatePassword(Request $request)
     {
-        $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
         $user = $request->user();
+
+        if ($user && $user->requiresPasswordChange()) {
+            // The user already proved knowledge of the temporary password during login.
+            $request->validate([
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+        } else {
+            $request->validate([
+                'current_password' => ['required', 'current_password'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+        }
+
         $user->forceFill([
             'password' => Hash::make($request->string('password')),
             'must_change_password' => false,
