@@ -37,6 +37,10 @@
           </a>
         @endif
 
+        <a href="{{ route('account.edit') }}" class="text-sm font-medium text-gray-700 hover:text-primary transition px-2">
+          Mi cuenta
+        </a>
+
         <a href="{{ route('dashboard.index') }}" class="text-sm font-medium text-primary hover:text-primary/80 transition px-2 mr-2">
           Dashboard
         </a>
@@ -122,6 +126,9 @@
             Panel Admin
           </a>
         @endif
+        <a href="{{ route('account.edit') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+          Mi cuenta
+        </a>
         <a href="{{ route('dashboard.index') }}" class="block text-sm font-medium text-primary hover:text-primary/80">
           Dashboard
         </a>

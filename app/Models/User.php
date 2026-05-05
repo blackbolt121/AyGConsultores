@@ -46,7 +46,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'must_change_password' => 'bool',
+        'temporary_password_set_at' => 'datetime',
     ];
+
+    public function requiresPasswordChange(): bool
+    {
+        return (bool) ($this->must_change_password ?? false);
+    }
 
     public function isAdmin(): bool
     {

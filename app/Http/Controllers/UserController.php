@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 use App\Models\User;
 
@@ -58,6 +61,24 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return view('admin.users.edit', compact('user'));
+    }
+
+    public function generateTemporaryPassword(Request $request, User $user)
+    {
+        // Admin-only route (protected via middleware group).
+        $temporaryPassword = Str::random(16);
+
+        $user->forceFill([
+            'password' => Hash::make($temporaryPassword),
+            'must_change_password' => true,
+            'temporary_password_set_at' => now(),
+            'temporary_password_set_by' => Auth::id(),
+        ])->save();
+
+        return redirect()
+            ->route('admin.users.edit', $user)
+            ->with('status', 'Contrasena temporal generada. Copiala ahora; no se volvera a mostrar.')
+            ->with('temporary_password', $temporaryPassword);
     }
 
     /**
