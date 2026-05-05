@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class CourseContent extends Model
 {
     protected $fillable = [
-        'course_id','parent_id','type','title','slug','summary','body','sort_order'
+        'course_id','parent_id','type','content_type','title','slug','summary','body','sort_order','file_path'
     ];
 
     protected $casts = [
@@ -29,6 +29,11 @@ class CourseContent extends Model
     public function children(): HasMany
     {
         return $this->hasMany(CourseContent::class, 'parent_id')->orderBy('sort_order');
+    }
+
+    public function cycleMaterials(): HasMany
+    {
+        return $this->hasMany(CourseCycleMaterial::class, 'course_content_id');
     }
 
     /** Profundidad (0 = raíz) */

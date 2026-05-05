@@ -10,7 +10,9 @@ class AdminContactController extends Controller
     // Listar todas las solicitudes
     public function index()
     {
-        $contacts = Contact::orderBy('created_at', 'desc')->paginate(20);
+        $contacts = Contact::where('status', '!=', 'spam')
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
 
         return view('contact.index', [
             'contacts' => $contacts,

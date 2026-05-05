@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_TEACHER = 'teacher';
+    const ROLE_STUDENT = 'student';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -42,4 +47,45 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isTeacher(): bool
+    {
+        return $this->role === self::ROLE_TEACHER;
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->role === self::ROLE_STUDENT;
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function teachingCycles()
+    {
+        return $this->belongsToMany(CourseCycle::class, 'course_cycle_teacher')
+            ->withTimestamps();
+    }
+
+    public function enrolledCycles()
+    {
+        return $this->belongsToMany(CourseCycle::class, 'enrollments', 'user_id', 'course_cycle_id')
+            ->withPivot(['enrolled_at', 'expires_at', 'status', 'accredited_at'])
+            ->withTimestamps();
+    }
+
+    public function enrolledCourses()
+    {
+        // Legacy: enrollments are now tied to cycles; keep for compatibility if still used.
+        return $this->belongsToMany(Course::class, 'enrollments')
+            ->withPivot(['enrolled_at', 'expires_at', 'status', 'accredited_at', 'course_cycle_id'])
+            ->withTimestamps();
+    }
 }

@@ -31,6 +31,16 @@
 
     <div class="flex items-center gap-4">
       @auth
+        @if(Auth::user()->isAdmin())
+          <a href="{{ route('admin.index') }}" class="text-sm font-medium text-red-600 hover:text-red-700 transition px-2">
+            Panel Admin
+          </a>
+        @endif
+
+        <a href="{{ route('dashboard.index') }}" class="text-sm font-medium text-primary hover:text-primary/80 transition px-2 mr-2">
+          Dashboard
+        </a>
+
         <form
           method="POST"
           action="{{ route('logout', absolute: false) }}"
@@ -107,6 +117,15 @@
       </a>
 
       @auth
+        @if(Auth::user()->isAdmin())
+          <a href="{{ route('admin.index') }}" class="block text-sm font-medium text-red-600 hover:text-red-700">
+            Panel Admin
+          </a>
+        @endif
+        <a href="{{ route('dashboard.index') }}" class="block text-sm font-medium text-primary hover:text-primary/80">
+          Dashboard
+        </a>
+
         <form
           method="POST"
           action="{{ route('logout', absolute: false) }}"
