@@ -14,6 +14,7 @@ use App\Http\Controllers\DocenteCycleController;
 use App\Http\Controllers\DocenteCycleMaterialController;
 use App\Http\Controllers\DocenteCycleStudentsController;
 use App\Http\Controllers\AdminCourseCycleController;
+use App\Http\Controllers\AdminCycleController;
 use App\Http\Controllers\AdminCycleEnrollmentController;
 
 /*
@@ -130,6 +131,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.admin.email']
         Route::delete('/{ciclo}', [AdminCourseCycleController::class, 'destroy'])->name('destroy');
     });
 
+    // Ciclos global
+    Route::get('cycles', [AdminCycleController::class, 'index'])->name('cycles.index');
+
     // Inscripciones por ciclo
     Route::prefix('cycles/{ciclo}/enrollments')->name('cycles.enrollments.')->group(function () {
         Route::get('/', [AdminCycleEnrollmentController::class, 'index'])->name('index');
@@ -161,5 +165,4 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'check.admin.email']
         });
     
 });
-
 

@@ -13,7 +13,7 @@
             <h1 class="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
                 Gestión Global de Inscripciones
             </h1>
-            <p class="text-gray-500 mt-2">Inscribe a cualquier usuario en cualquier curso desde aquí.</p>
+            <p class="text-gray-500 mt-2">Inscribe alumnos a cualquier ciclo desde aquí.</p>
         </div>
     </div>
 
@@ -37,7 +37,7 @@
                         <label for="course_cycle_id" class="block text-sm font-medium text-gray-700">Ciclo</label>
                         <select name="course_cycle_id" id="course_cycle_id" required
                             class="block w-full rounded-xl border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
-                            <option value="" disabled selected>Elige un curso...</option>
+                            <option value="" disabled selected>Elige un ciclo...</option>
                             @foreach($cycles as $cycle)
                                 <option value="{{ $cycle->id }}" {{ old('course_cycle_id') == $cycle->id ? 'selected' : '' }}>
                                     {{ $cycle->course->title }} · {{ $cycle->name }}
@@ -50,16 +50,23 @@
                     </div>
 
                     <div class="space-y-2">
-                        <label for="user_id" class="block text-sm font-medium text-gray-700">Usuario</label>
-                        <select name="user_id" id="user_id" required
+                        <label for="user_id" class="block text-sm font-medium text-gray-700">Alumno</label>
+                        <select name="user_id" id="user_id" required {{ $users->isEmpty() ? 'disabled' : '' }}
                             class="block w-full rounded-xl border-gray-300 shadow-sm focus:border-primary focus:ring-primary text-sm">
-                            <option value="" disabled selected>Elige un usuario...</option>
-                            @foreach($users as $user)
-                                <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                    {{ $user->name }} ({{ $user->email }})
-                                </option>
-                            @endforeach
+                            @if($users->isEmpty())
+                                <option value="" selected>No hay alumnos registrados</option>
+                            @else
+                                <option value="" disabled selected>Elige un alumno...</option>
+                                @foreach($users as $user)
+                                    <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }} ({{ $user->email }})
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
+                        @if($users->isEmpty())
+                            <p class="text-xs text-amber-700">Crea al menos un usuario con rol <strong>student</strong> para poder inscribirlo.</p>
+                        @endif
                         @error('user_id')
                             <p class="text-xs text-red-500">{{ $message }}</p>
                         @enderror
