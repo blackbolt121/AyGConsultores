@@ -17,20 +17,10 @@ class CheckAdminEmail
      */
     public function handle(Request $request, Closure $next)
     {
-        // Verifica si el usuario está autenticado
-        if (Auth::check()) {
-            // Obtiene el correo del usuario autenticado
-            $email = Auth::user()->email;
-
-            // Si el correo es el del administrador, permite el acceso
-            $white_list = ['admin@aygconsultores.com.mx', 'rgo1999@hotmail.com'];
-
-            if (in_array($email, $white_list, true)) {
-                return $next($request);
-            }
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            return $next($request);
         }
 
-        // Si no es admin o no está autenticado, redirige al index del sitio
-        return redirect('/');
+        return redirect('/')->with('error', 'No tienes permisos para acceder a esta sección.');
     }
 }

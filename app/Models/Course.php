@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Course extends Model
 {
     protected $fillable = [
-        'title','slug','category','hours','image','excerpt','featured','description'
+        'title','slug','category','hours','image','excerpt','featured','description',
+        'course_family_id','major_version'
     ];
 
     protected $casts = [
@@ -50,4 +51,20 @@ class Course extends Model
             ->orderBy('sort_order');
     }
 
+    public function enrollments(): HasMany
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+    public function cycles(): HasMany
+    {
+        return $this->hasMany(CourseCycle::class);
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'enrollments')
+            ->withPivot(['enrolled_at', 'expires_at', 'status'])
+            ->withTimestamps();
+    }
 }

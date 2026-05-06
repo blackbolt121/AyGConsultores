@@ -1,18 +1,47 @@
-<li class="rounded-xl border border-gray-200 bg-white p-4">
-  <div class="flex flex-wrap items-start justify-between gap-3">
-    <div class="min-w-0">
-      <div class="font-medium text-gray-900">{{ $item->numbering ?? '' }} {{ $item->title }}</div>
-      <div class="mt-1 text-xs text-gray-500">{{ ucfirst($item->type) }}</div>
-      @if($item->summary)
-        <div class="mt-1 text-sm text-gray-700">{{ $item->summary }}</div>
-      @endif
-    </div>
+<li class="relative">
+  @php
+    $depth = $depth ?? 0;
+    // Indentación visual según profundidad
+    $marginLeft = $depth > 0 ? 'ml-8' : '';
+    $borderColor = $depth === 0 ? 'border-slate-200 shadow-sm' : 'border-slate-100 bg-slate-50/50';
+  @endphp
 
-    <div class="flex items-center gap-2">
-      {{-- Botones reordenar (up/down) --}}
-      <form action="{{ route('admin.courses.contents.reorder', $course) }}" method="POST" class="inline">
-        @csrf
-        <input type="hidden" name="parent_id" value="{{ $item->parent_id }}">
+  @if($depth > 0)
+    <!-- Línea conectora para hijos -->
+    <div class="absolute left-[-20px] top-6 w-5 h-[2px] bg-slate-200"></div>
+    <div class="absolute left-[-20px] top-[-10px] w-[2px] h-[34px] bg-slate-200"></div>
+  @endif
+
+  <div class="{{ $marginLeft }} rounded-2xl border {{ $borderColor }} bg-white p-5 transition-all hover:shadow-md">
+    <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+      
+      {{-- Información principal --}}
+      <div class="flex-1 min-w-0 flex items-start gap-3">
+        <div class="mt-1 flex-shrink-0">
+          @if($item->type === 'section')
+            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm" title="Sección">S</div>
+          @elseif($item->type === 'unit')
+            <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm" title="Unidad">U</div>
+          @elseif($item->type === 'exercise')
+            <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-sm" title="Ejercicio">E</div>
+          @else
+            <div class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm" title="Tema">T</div>
+          @endif
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h4 class="font-bold text-slate-800 text-base">{{ $item->numbering ?? '' }} {{ $item->title }}</h4>
+            <span class="px-2 py-0.5 rounded-md bg-slate-100 text-slate-500 text-xs font-medium">{{ $types[$item->type] ?? ucfirst($item->type) }}</span>
+          </div>
+          @if($item->summary)
+            <p class="mt-1 text-sm text-slate-500 leading-relaxed">{{ $item->summary }}</p>
+          @endif
+        </div>
+      </div>
+
+      {{-- Acciones (Botones) --}}
+      <div class="flex items-center gap-1.5 shrink-0 bg-slate-50 p-1.5 rounded-xl border border-slate-100">
+        {{-- Reordenar --}}
         @php
           $siblings = ($item->parent_id)
             ? $item->parent->children->sortBy('sort_order')->values()
@@ -22,108 +51,131 @@
           $idsUp   = $ids; if ($idx > 0) { [$idsUp[$idx-1], $idsUp[$idx]] = [$idsUp[$idx], $idsUp[$idx-1]]; }
           $idsDown = $ids; if ($idx < count($ids)-1) { [$idsDown[$idx+1], $idsDown[$idx]] = [$idsDown[$idx], $idsDown[$idx+1]]; }
         @endphp
-        @if($idx > 0)
-          @foreach($idsUp as $id) <input type="hidden" name="items[]" value="{{ $id }}"> @endforeach
-          <button class="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50" title="Subir">↑</button>
-        @endif
-      </form>
-
-      <form action="{{ route('admin.courses.contents.reorder', $course) }}" method="POST" class="inline">
-        @csrf
-        <input type="hidden" name="parent_id" value="{{ $item->parent_id }}">
-        @foreach($idsDown as $id) <input type="hidden" name="items[]" value="{{ $id }}"> @endforeach
-        @if($idx < count($ids)-1)
-          <button class="rounded-lg border px-2 py-1 text-sm hover:bg-gray-50" title="Bajar">↓</button>
-        @endif
-      </form>
-
-      {{-- Editar toggle --}}
-      <details class="inline-block">
-        <summary class="cursor-pointer rounded-lg border px-2 py-1 text-sm hover:bg-gray-50">Editar</summary>
-        <form action="{{ route('admin.courses.contents.update', [$course, $item]) }}" method="POST" class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-3">
-          @csrf @method('PUT')
-          <div class="md:col-span-3">
-            <label class="block text-sm text-gray-700">Título *</label>
-            <input type="text" name="title" value="{{ old('title', $item->title) }}" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary" required>
-          </div>
-          <div>
-            <label class="block text-sm text-gray-700">Tipo</label>
-            <select name="type" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary">
-              @foreach($types as $val => $label)
-                <option value="{{ $val }}" @selected($item->type === $val)>{{ $label }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm text-gray-700">Mover a</label>
-            <select name="parent_id" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary">
-              <option value="" @selected(!$item->parent_id)>Raíz</option>
-              @foreach($course->rootContents as $rootOption)
-                <option value="{{ $rootOption->id }}" @selected($item->parent_id === $rootOption->id)>
-                  {{ $rootOption->title }}
-                </option>
-              @endforeach
-            </select>
-          </div>
-          <div class="md:col-span-3">
-            <label class="block text-sm text-gray-700">Resumen</label>
-            <textarea name="summary" rows="2" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary">{{ old('summary', $item->summary) }}</textarea>
-          </div>
-          <div class="md:col-span-3">
-            <label class="block text-sm text-gray-700">Contenido (body)</label>
-            <textarea name="body" rows="4" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary">{{ old('body', $item->body) }}</textarea>
-          </div>
-          <div class="md:col-span-3">
-            <button class="rounded-lg bg-primary px-3 py-1.5 text-white hover:bg-primary/90">Guardar cambios</button>
-          </div>
+        
+        <form action="{{ route('admin.courses.contents.reorder', $course) }}" method="POST" class="inline">
+          @csrf <input type="hidden" name="parent_id" value="{{ $item->parent_id }}">
+          @if($idx > 0)
+            @foreach($idsUp as $id) <input type="hidden" name="items[]" value="{{ $id }}"> @endforeach
+            <button class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-white transition-colors" title="Subir">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+            </button>
+          @else
+            <div class="w-7"></div>
+          @endif
         </form>
-      </details>
 
-      {{-- Eliminar --}}
-      <form action="{{ route('admin.courses.contents.destroy', [$course, $item]) }}" method="POST"
-            onsubmit="return confirm('¿Eliminar este ítem y sus hijos?')" class="inline">
-        @csrf @method('DELETE')
-        <button class="rounded-lg border border-red-500 bg-white px-2 py-1 text-sm text-red-600 hover:bg-red-600 hover:text-white">
-          Eliminar
-        </button>
-      </form>
-
-      {{-- Agregar hijo toggle --}}
-      <details class="inline-block">
-        <summary class="cursor-pointer rounded-lg border px-2 py-1 text-sm hover:bg-gray-50">+ Hijo</summary>
-        <form action="{{ route('admin.courses.contents.store', $course) }}" method="POST" class="mt-2 grid grid-cols-1 md:grid-cols-3 gap-3">
-          @csrf
-          <input type="hidden" name="parent_id" value="{{ $item->id }}">
-          <div class="md:col-span-3">
-            <label class="block text-sm text-gray-700">Título *</label>
-            <input type="text" name="title" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary" required>
-          </div>
-          <div>
-            <label class="block text-sm text-gray-700">Tipo</label>
-            <select name="type" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary">
-              @foreach($types as $val => $label)
-                <option value="{{ $val }}">{{ $label }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="md:col-span-3">
-            <label class="block text-sm text-gray-700">Resumen</label>
-            <textarea name="summary" rows="2" class="mt-1 block w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary"></textarea>
-          </div>
-          <div class="md:col-span-3">
-            <button class="rounded-lg bg-primary px-3 py-1.5 text-white hover:bg-primary/90">Agregar hijo</button>
-          </div>
+        <form action="{{ route('admin.courses.contents.reorder', $course) }}" method="POST" class="inline">
+          @csrf <input type="hidden" name="parent_id" value="{{ $item->parent_id }}">
+          @if($idx < count($ids)-1)
+            @foreach($idsDown as $id) <input type="hidden" name="items[]" value="{{ $id }}"> @endforeach
+            <button class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-white transition-colors" title="Bajar">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7 7" /></svg>
+            </button>
+          @else
+            <div class="w-7"></div>
+          @endif
         </form>
-      </details>
+
+        <div class="w-px h-4 bg-slate-200 mx-1"></div>
+
+        {{-- Editar toggle --}}
+        <details class="group relative">
+          <summary class="cursor-pointer p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors list-none" title="Editar">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+          </summary>
+          <div class="absolute right-0 top-full mt-2 w-screen max-w-lg z-10 bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
+            <h4 class="text-sm font-bold text-slate-800 mb-4">Editar Contenido</h4>
+            <form action="{{ route('admin.courses.contents.update', [$course, $item]) }}" method="POST" class="grid grid-cols-1 gap-4">
+              @csrf @method('PUT')
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Título *</label>
+                <input type="text" name="title" value="{{ old('title', $item->title) }}" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none" required>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo</label>
+                  <select name="type" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none">
+                    @foreach($types as $val => $label)
+                      <option value="{{ $val }}" @selected($item->type === $val)>{{ $label }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-600 mb-1">Mover a</label>
+                  <select name="parent_id" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none">
+                    <option value="" @selected(!$item->parent_id)>Raíz</option>
+                    @foreach($course->rootContents as $rootOption)
+                      <option value="{{ $rootOption->id }}" @selected($item->parent_id === $rootOption->id)>{{ $rootOption->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Resumen Corto</label>
+                <textarea name="summary" rows="2" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none">{{ old('summary', $item->summary) }}</textarea>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Contenido HTML / Text</label>
+                <textarea name="body" rows="4" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm outline-none font-mono text-xs">{{ old('body', $item->body) }}</textarea>
+              </div>
+              <div class="flex justify-end pt-2">
+                <button class="rounded-lg bg-indigo-600 px-4 py-2 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">Guardar</button>
+              </div>
+            </form>
+          </div>
+        </details>
+
+        {{-- Agregar hijo toggle --}}
+        <details class="group relative">
+          <summary class="cursor-pointer p-1.5 rounded-lg text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 transition-colors list-none" title="Añadir Sub-contenido">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
+          </summary>
+          <div class="absolute right-0 top-full mt-2 w-screen max-w-md z-10 bg-white p-6 rounded-2xl shadow-xl border border-slate-100">
+            <h4 class="text-sm font-bold text-slate-800 mb-4">Añadir dentro de "{{ $item->title }}"</h4>
+            <form action="{{ route('admin.courses.contents.store', $course) }}" method="POST" class="grid grid-cols-1 gap-4">
+              @csrf <input type="hidden" name="parent_id" value="{{ $item->id }}">
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Título *</label>
+                <input type="text" name="title" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm outline-none" required>
+              </div>
+              <div>
+                <label class="block text-xs font-semibold text-slate-600 mb-1">Tipo</label>
+                <select name="type" class="block w-full px-3 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-sm outline-none">
+                  @foreach($types as $val => $label) <option value="{{ $val }}">{{ $label }}</option> @endforeach
+                </select>
+              </div>
+              <div class="flex justify-end pt-2">
+                <button class="rounded-lg bg-emerald-600 px-4 py-2 text-white text-sm font-medium hover:bg-emerald-700 transition-colors">Añadir Sub-contenido</button>
+              </div>
+            </form>
+          </div>
+        </details>
+
+        <div class="w-px h-4 bg-slate-200 mx-1"></div>
+
+        {{-- Eliminar --}}
+        <form action="{{ route('admin.courses.contents.destroy', [$course, $item]) }}" method="POST"
+              onsubmit="return confirm('¿Estás seguro de que deseas eliminar este ítem y todo su contenido interno?')" class="inline">
+          @csrf @method('DELETE')
+          <button class="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors" title="Eliminar">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+          </button>
+        </form>
+
+      </div>
     </div>
   </div>
 
   {{-- Hijos (1 nivel más) --}}
   @if($item->children->isNotEmpty())
-    <ol class="ml-6 mt-3 space-y-3">
-      @foreach($item->children as $child)
-        @include('admin.courses._content_item', ['item' => $child, 'course' => $course, 'types' => $types])
-      @endforeach
-    </ol>
+    <div class="relative mt-3">
+      <!-- Línea vertical conectora principal -->
+      <div class="absolute left-4 top-0 w-[2px] h-full bg-slate-200 -z-10"></div>
+      <ol class="space-y-3 relative z-0">
+        @foreach($item->children as $child)
+          @include('admin.courses._content_item', ['item' => $child, 'course' => $course, 'types' => $types, 'depth' => $depth + 1])
+        @endforeach
+      </ol>
+    </div>
   @endif
 </li>
