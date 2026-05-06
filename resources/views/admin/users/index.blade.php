@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto max-w-7xl px-4 py-8">
-    <div class="flex justify-between items-center mb-8">
-        <div>
-            <h1 class="text-3xl font-bold text-gray-900">Gestión de Usuarios</h1>
-            <p class="text-gray-600">Administra los accesos y roles de la plataforma.</p>
+<section class="py-8 md:py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-8">
+        <div class="space-y-2">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">Gestión de Usuarios</h1>
+            <p class="text-slate-600">Administra los accesos y roles de la plataforma.</p>
         </div>
-        <a href="{{ route('admin.users.create') }}" class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md font-medium transition">
+        <a href="{{ route('admin.users.create') }}" class="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-primary to-secondary px-4 py-2 text-white font-medium shadow-sm hover:shadow-md transition-all duration-300">
             Nuevo Usuario
         </a>
     </div>
@@ -18,19 +19,19 @@
         </div>
     @endif
 
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead>
-                <tr class="bg-gray-50 border-b border-gray-100">
+                <tr class="bg-slate-50 border-b border-slate-200">
                     <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider">Nombre</th>
                     <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider">Email</th>
                     <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider">Rol</th>
                     <th class="px-6 py-4 text-sm font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100">
+            <tbody class="divide-y divide-slate-100">
                 @foreach($users as $user)
-                <tr class="hover:bg-gray-50/50 transition-colors">
+                <tr class="hover:bg-slate-50/50 transition-colors">
                     <td class="px-6 py-4">
                         <div class="font-medium text-gray-900">{{ $user->name }}</div>
                     </td>
@@ -47,11 +48,11 @@
                     </td>
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-3">
-                            <a href="{{ route('admin.users.edit', $user) }}" class="text-primary hover:text-primary/80 font-medium">Editar</a>
+                            <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm hover:shadow-md hover:bg-slate-50 transition-all duration-300">Editar</a>
                             <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este usuario?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-800 font-medium">Eliminar</button>
+                                <button type="submit" class="inline-flex items-center rounded-xl bg-red-600 px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:shadow-md hover:bg-red-700 transition-all duration-300">Eliminar</button>
                             </form>
                         </div>
                     </td>
@@ -65,4 +66,5 @@
         {{ $users->links() }}
     </div>
 </div>
+</section>
 @endsection

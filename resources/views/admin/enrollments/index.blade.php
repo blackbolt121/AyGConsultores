@@ -10,7 +10,7 @@
                 </svg>
                 Volver al Panel
             </a>
-            <h1 class="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text text-transparent">
                 Gestión Global de Inscripciones
             </h1>
             <p class="text-gray-500 mt-2">Inscribe alumnos a cualquier ciclo desde aquí.</p>
