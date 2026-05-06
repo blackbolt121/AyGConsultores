@@ -17,6 +17,19 @@
         @csrf
         @method('PUT')
 
+        @if (session('status'))
+            <div class="rounded-lg border border-green-200 bg-green-50 p-4 text-green-700">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if (session('temporary_password'))
+            <div class="rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
+                <p class="font-semibold">Contrasena temporal (se muestra una sola vez)</p>
+                <p class="mt-2 font-mono text-lg tracking-wide">{{ session('temporary_password') }}</p>
+            </div>
+        @endif
+
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
             <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required
@@ -59,6 +72,19 @@
             </a>
             <button type="submit" class="px-6 py-2 rounded-md bg-primary text-white font-medium hover:bg-primary/90 transition shadow-sm">
                 Guardar Cambios
+            </button>
+        </div>
+    </form>
+
+    <form action="{{ route('admin.users.temporary-password', $user) }}" method="POST" class="mt-4 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        @csrf
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+            <div>
+                <h3 class="text-lg font-medium text-gray-900">Contrasena temporal</h3>
+                <p class="text-sm text-gray-600">Genera una contrasena temporal y obliga al usuario a cambiarla al iniciar sesion.</p>
+            </div>
+            <button type="submit" class="px-4 py-2 rounded-md border border-amber-300 bg-amber-50 text-amber-900 font-medium hover:bg-amber-100 transition">
+                Generar contrasena temporal
             </button>
         </div>
     </form>
