@@ -1,4 +1,4 @@
-<section class="relative py-20 overflow-hidden">
+<section class="relative py-16 md:py-24 overflow-hidden">
   <div class="absolute inset-0 -z-10">
     <div class="absolute inset-0 bg-gradient-to-b from-white via-gray-50/50 to-white"></div>
     <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
@@ -7,9 +7,9 @@
     <div class="absolute bottom-20 left-10 h-40 w-40 rounded-full bg-secondary/5 blur-3xl"></div>
   </div>
 
-  <div class="container mx-auto px-4 md:px-6 max-w-7xl">
-    <div class="flex flex-col items-center space-y-4 text-center mb-16">
-      <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-center space-y-4 text-center mb-12 md:mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text text-transparent">
         Características Clave
       </h2>
       <p class="max-w-[700px] text-gray-600 md:text-xl">Descubre lo que hace única nuestra metodología empresarial</p>
@@ -18,7 +18,7 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       {{-- Desarrollo Cognitivo --}}
       <div class="group">
-        <div class="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary/20 overflow-hidden">
+        <div class="flex flex-col h-full bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1">
           <div class="h-48 relative overflow-hidden">
             <img src="{{ asset('images/desarrollo-cognitivo.jpg') }}" alt="Desarrollo Cognitivo" class="object-cover w-full h-full group-hover:scale-110 transition-transform">
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -37,7 +37,7 @@
 
       {{-- Crecimiento Personal (ojo con nombre de archivo) --}}
       <div class="group">
-        <div class="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-secondary/20 overflow-hidden">
+        <div class="flex flex-col h-full bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-secondary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1">
           <div class="h-48 relative overflow-hidden">
             <img src="{{ asset('images/creciemiento-personal.jpg') }}" alt="Crecimiento Personal" class="object-cover w-full h-full group-hover:scale-110 transition-transform">
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
@@ -55,7 +55,7 @@
 
       {{-- Colaboración Efectiva --}}
       <div class="group">
-        <div class="flex flex-col h-full bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-primary/20 overflow-hidden">
+        <div class="flex flex-col h-full bg-white rounded-2xl shadow-sm border border-slate-200 hover:shadow-md hover:border-primary/20 overflow-hidden transition-all duration-300 hover:-translate-y-1">
           <div class="h-48 relative overflow-hidden">
             <img src="{{ asset('images/colab-efectiva.jpg') }}" alt="Colaboración Efectiva" class="object-cover w-full h-full group-hover:scale-110 transition-transform">
             <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>

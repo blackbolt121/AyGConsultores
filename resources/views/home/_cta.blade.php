@@ -1,4 +1,4 @@
-<section class="relative py-20 overflow-hidden">
+<section class="relative py-16 md:py-24 overflow-hidden">
   <div class="absolute inset-0 -z-10">
     <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"></div>
     <div class="absolute inset-0 bg-[url('{{ asset('images/abstract-geometric-pattern.png') }}')] bg-repeat opacity-5"></div>
@@ -6,12 +6,12 @@
     <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white to-transparent"></div>
   </div>
 
-  <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="relative bg-white rounded-2xl shadow-xl overflow-hidden group">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 md:p-12">
         {{-- Texto + formulario --}}
         <div class="flex flex-col justify-center">
-          <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text">
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             ¿Listo para transformar tu potencial?
           </h2>
           <p class="text-gray-600 mb-6 md:text-lg">
@@ -26,10 +26,10 @@
                 name="email"
                 required
                 placeholder="Tu correo electrónico"
-                class="flex w-full rounded-md border bg-background px-3 py-2 text-base h-12 border-gray-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                class="flex w-full rounded-xl border bg-background px-3 py-2 text-base h-12 border-slate-200 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30 transition"
               />
             </div>
-            <button class="inline-flex items-center justify-center rounded-md text-sm font-medium h-12 px-6 bg-primary text-white hover:bg-primary/90">
+            <button class="inline-flex items-center justify-center rounded-xl text-sm font-medium h-12 px-6 bg-gradient-to-r from-primary to-secondary text-white shadow-sm hover:shadow-md transition-all duration-300">
               Suscribirme
             </button>
           </form>
@@ -46,21 +46,21 @@
 
         {{-- Bullets de valor --}}
         <div class="flex flex-col justify-center space-y-6">
-          <div class="p-3 rounded-lg bg-primary/5 flex gap-2 items-center">
+          <div class="p-4 rounded-2xl border border-slate-200 bg-primary/5 flex gap-3 items-start shadow-sm">
             @includeWhen(true,'partials._check', ['class' => 'text-primary'])
             <div>
               <h3 class="font-semibold text-lg mb-1 text-primary">Contenido Exclusivo</h3>
               <p class="text-gray-600">Accede a recursos y materiales únicos.</p>
             </div>
           </div>
-          <div class="p-3 rounded-lg bg-secondary/5 flex gap-2 items-center">
+          <div class="p-4 rounded-2xl border border-slate-200 bg-secondary/5 flex gap-3 items-start shadow-sm">
             @includeWhen(true,'partials._check', ['class' => 'text-secondary'])
             <div>
               <h3 class="font-semibold text-lg mb-1 text-secondary">Descuentos Especiales</h3>
               <p class="text-gray-600">Ofertas exclusivas en cursos y programas.</p>
             </div>
           </div>
-          <div class="p-3 rounded-lg bg-primary/5 flex gap-2 items-center">
+          <div class="p-4 rounded-2xl border border-slate-200 bg-primary/5 flex gap-3 items-start shadow-sm">
             @includeWhen(true,'partials._check', ['class' => 'text-primary'])
             <div>
               <h3 class="font-semibold text-lg mb-1 text-primary">Eventos y Webinars</h3>

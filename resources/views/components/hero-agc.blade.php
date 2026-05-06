@@ -30,50 +30,50 @@
     ],
 ])
 
-<section class="bg-gradient-to-br from-primary/5 via-secondary/5 to-purple-50 md:py-20 flex items-center">
-  <div class="mx-auto max-w-7xl px-4 py-14 md:px-6 md:py-20">
+<section class="bg-gradient-to-br from-primary/5 via-secondary/5 to-secondary/5 py-16 md:py-24 flex items-center">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
       {{-- Columna izquierda --}}
-      <div>
+      <div class="space-y-6">
         {{-- Pill / badge --}}
         <div class="inline-flex gap-2 items-center rounded-full border border-primary/30 bg-gradient-to-r from-primary/10 to-secondary/10 px-4 py-2 text-sm text-primary backdrop-blur-sm" style="opacity: 1; transform: none;">
           <!-- SVG del ícono de "sparkles" (destellos) -->
           <x-shared.icons.sparkles class="w-5 h-5 text-primary"/>
           <!-- Texto del componente -->
-          <span class="font-medium text-sm text-indigo-800">
+          <span class="font-medium text-sm text-secondary">
               {{ $badge }}
           </span>
         </div>
         
 
         {{-- Título con gradiente --}}
-        <h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-          <span class="bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
+        <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight">
+          <span class="bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text text-transparent">
             {{ $title }}
           </span>
         </h1>
 
         {{-- Subtítulo --}}
-        <p class="mt-5 max-w-2xl text-slate-600">
+        <p class="max-w-2xl text-slate-600 text-base sm:text-lg leading-relaxed">
           {{ $subtitle }}
         </p>
 
         {{-- Botones --}}
-        <div class="mt-8 flex flex-wrap items-center gap-4 text-white">
+        <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 text-white">
           <a href="{{ $primary['href'] }}"
-             class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 bg-gradient-to-r from-primary to-secondary">
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-medium bg-gradient-to-r from-primary to-secondary text-white shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30">
             <span>{{ $primary['label'] }}</span>
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <x-icon name="lucide-arrow-right" class="h-4 w-4" />
           </a>
 
           <a href="{{ $secondary['href'] }}"
-             class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-slate-700 shadow-sm transition hover:shadow-md">
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
             {{ $secondary['label'] }}
           </a>
         </div>
 
         {{-- Chips de beneficios --}}
-        <div class="mt-8 flex flex-wrap gap-6">
+        <div class="flex flex-wrap gap-6 pt-2">
           @foreach ($features as $f)
             <div class="flex items-center gap-3">
               <div class="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">

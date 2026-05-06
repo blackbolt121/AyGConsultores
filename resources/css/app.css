@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  /* Comfortable default padding for form controls.
+     Specific component classes can still override these. */
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='number'],
+  input[type='date'],
+  input[type='search'],
+  input[type='tel'],
+  input[type='url'],
+  textarea,
+  select {
+    @apply px-4 py-2.5;
+  }
+
+  /* Avoid affecting checkboxes/radios and other compact controls. */
+}
+
 
 :root {
   --primary: #5272FF;

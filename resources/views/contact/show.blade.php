@@ -24,12 +24,14 @@
                             'new' => 'bg-blue-50 text-blue-700 ring-blue-200',
                             'in_progress' => 'bg-amber-50 text-amber-700 ring-amber-200',
                             'done' => 'bg-emerald-50 text-emerald-700 ring-emerald-200',
+                            'spam' => 'bg-red-50 text-red-700 ring-red-200',
                             default => 'bg-gray-50 text-gray-700 ring-gray-200',
                         };
                         $label = match ($status) {
                             'new' => 'Nuevo',
                             'in_progress' => 'En progreso',
                             'done' => 'Resuelto',
+                            'spam' => 'Spam / Publicidad',
                             default => ucfirst($status),
                         };
                     @endphp
@@ -153,6 +155,30 @@
                             </div>
                         </form>
                     </div>
+
+                    {{-- Formulario para marcar como Spam --}}
+                    @if($contact->status !== 'spam')
+                    <div class="bg-red-50 border border-red-100 rounded-2xl shadow-sm p-6 mt-6">
+                        <h2 class="text-sm font-semibold text-red-900 mb-2">
+                            Marcar como Spam
+                        </h2>
+                        <p class="text-xs text-red-700 mb-4">
+                            Si este mensaje es publicidad, venta de servicios o spam, puedes ocultarlo y cerrarlo definitivamente.
+                        </p>
+                        <form method="POST" action="{{ route('admin.contact.updateStatus', $contact) }}" onsubmit="return confirm('¿Estás seguro de marcar este mensaje como spam? Se ocultará de la lista principal.');">
+                            @csrf
+                            @method('PATCH')
+                            <input type="hidden" name="status" value="spam">
+                            <button type="submit"
+                                class="inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-xl bg-red-600 text-white hover:bg-red-700 transition w-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                Es Spam / Publicidad
+                            </button>
+                        </form>
+                    </div>
+                    @endif
                 </div>
 
                 {{-- Columna derecha: mensaje --}}

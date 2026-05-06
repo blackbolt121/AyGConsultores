@@ -1,4 +1,4 @@
-<section class="relative py-16 md:py-20 overflow-hidden">
+<section class="relative py-16 md:py-24 overflow-hidden">
   {{-- Fondo suave + brillos --}}
   <div class="absolute inset-0 -z-10">
     <div class="absolute inset-0 bg-gradient-to-b from-white via-slate-50/60 to-white"></div>
@@ -6,13 +6,13 @@
     <div class="absolute -bottom-10 left-10 h-40 w-40 rounded-full bg-secondary/10 blur-3xl"></div>
   </div>
 
-  <div class="container mx-auto max-w-7xl px-4 md:px-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {{-- Título + descripción --}}
-    <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16">
-      <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
+    <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16 space-y-4">
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text text-transparent">
         Nuestra Propuesta de Valor
       </h2>
-      <p class="mt-4 text-slate-600 md:text-lg">
+      <p class="text-slate-600 md:text-lg">
         Se basa en métodos de presentación conceptual llamados; Consultoría
         Integral Colaborativa (CIC), Método de Interacción (MI), integrando
         técnicas y herramientas didácticas, pedagógicas, lúdicas, estudio de
@@ -25,7 +25,7 @@
       {{-- Card 1 --}}
       <div class="group relative">
         <div class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-primary/5"></div>
-        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
           <div class="p-4 bg-primary/10 rounded-xl mb-6 w-16 h-16 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300 transform group-hover:scale-110 group-hover:rotate-3">
             {{-- icono foco --}}
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -58,7 +58,7 @@
       {{-- Card 2 --}}
       <div class="group relative">
         <div class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-secondary/5"></div>
-        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
           <div class="p-4 bg-secondary/10 rounded-xl mb-6 w-16 h-16 flex items-center justify-center group-hover:bg-secondary/20 transition-colors duration-300 transform group-hover:scale-110 group-hover:rotate-3">
             {{-- icono usuario círculo --}}
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -88,7 +88,7 @@
       {{-- Card 3 --}}
       <div class="group relative">
         <div class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-primary/5"></div>
-        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
           <div class="p-4 bg-primary/10 rounded-xl mb-6 w-16 h-16 flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300 transform group-hover:scale-110 group-hover:rotate-3">
             {{-- icono espiral/target simple --}}
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -121,7 +121,7 @@
       {{-- Card 4 --}}
       <div class="group relative">
         <div class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-secondary/5"></div>
-        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition">
+        <div class="relative h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
           <div class="p-4 bg-secondary/10 rounded-xl mb-6 w-16 h-16 flex items-center justify-center group-hover:bg-secondary/20 transition-colors duration-300 transform group-hover:scale-110 group-hover:rotate-3">
             {{-- icono corazón --}}
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
