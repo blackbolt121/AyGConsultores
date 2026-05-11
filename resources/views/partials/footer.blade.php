@@ -40,18 +40,6 @@
         <h3 class="text-lg font-semibold mb-4">Contacto</h3>
         <ul class="space-y-4 text-white/75">
           <li class="flex items-center">
-            <!-- Ícono map-pin -->
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                 fill="none" viewBox="0 0 24 24" 
-                 stroke-width="2" stroke="currentColor" 
-                 class="w-10 h-10 mr-2 text-white/90">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 21c-4-4.5-7-8-7-11a7 7 0 1 1 14 0c0 3-3 6.5-7 11z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            Monte Sinaí #144-B, col. Vista Hermosa, Santiago de Querétaro
-          </li>
-          <li class="flex items-center">
             <!-- Ícono mail -->
             <svg xmlns="http://www.w3.org/2000/svg" 
                  fill="none" viewBox="0 0 24 24" 
