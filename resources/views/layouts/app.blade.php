@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>@yield('title','Plataforma de Cursos - A&G Consultores')</title>
+  <title>@yield('title','Plataforma de Cursos - A&G Consultoría')</title>
   <meta name="description" content="@yield('meta_description','Descubre tus potencialidades a través de nuestra capacitación y consultoría integral y colaborativa.')">
+  <meta property="og:site_name" content="AyG Consultoria">
   <link rel="icon" href="{{ asset('logo.svg') }}">
   @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
