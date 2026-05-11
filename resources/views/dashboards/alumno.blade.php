@@ -47,24 +47,25 @@
         return $classes[$k] ?? 'bg-gray-50 text-gray-700 ring-gray-700/10';
     };
 @endphp
-<section class="py-10 container mx-auto max-w-7xl px-4">
+<section class="py-8 md:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text text-transparent">
             Mis Ciclos
         </h1>
         <p class="text-gray-500 mt-2">Accede a tus cursos por ciclo.</p>
         @if($modo)
-            <p class="mt-2 text-sm text-amber-700 bg-amber-50 border border-amber-200 inline-flex px-3 py-1.5 rounded-lg">
+            <p class="mt-3 text-sm text-amber-800 bg-amber-50 border border-amber-200 inline-flex px-3 py-1.5 rounded-full">
                 Modo activo (admin): viendo como <strong class="ml-1">{{ ucfirst($modo) }}</strong>
             </p>
         @endif
     </div>
 
-    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-        <div class="px-6 py-5 border-b border-gray-200 bg-gray-50/50 flex items-center justify-between gap-3">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-200 bg-slate-50/50 flex items-center justify-between gap-3">
             <h3 class="text-base font-semibold text-gray-900">Mis Inscripciones ({{ $enrollments->count() }})</h3>
 
-            <div class="inline-flex rounded-xl border border-gray-200 bg-white p-1" role="tablist" aria-label="Cambiar layout">
+            <div class="inline-flex rounded-xl border border-slate-200 bg-white p-1 shadow-sm" role="tablist" aria-label="Cambiar layout">
                 @php
                     $baseParams = request()->query();
                 @endphp
@@ -72,7 +73,7 @@
                     data-layout-toggle
                     data-layout="stack"
                     href="{{ request()->fullUrlWithQuery(array_merge($baseParams, ['layout' => 'stack'])) }}"
-                    class="px-3 py-1.5 text-sm rounded-lg {{ $layout === 'stack' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-50' }}"
+                    class="px-3 py-1.5 text-sm rounded-lg transition-all duration-300 {{ $layout === 'stack' ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-50' }}"
                 >
                     Stack
                 </a>
@@ -80,7 +81,7 @@
                     data-layout-toggle
                     data-layout="cards"
                     href="{{ request()->fullUrlWithQuery(array_merge($baseParams, ['layout' => 'cards'])) }}"
-                    class="px-3 py-1.5 text-sm rounded-lg {{ $layout === 'cards' ? 'bg-primary text-white' : 'text-gray-700 hover:bg-gray-50' }}"
+                    class="px-3 py-1.5 text-sm rounded-lg transition-all duration-300 {{ $layout === 'cards' ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-sm' : 'text-gray-700 hover:bg-gray-50' }}"
                 >
                     Cards
                 </a>
@@ -128,7 +129,7 @@
                     </div>
                 </div>
             @else
-                <div class="divide-y divide-gray-100">
+                    <div class="divide-y divide-slate-100">
                     @foreach($enrollments as $enrollment)
                         @php
                             $cycle = $enrollment->courseCycle;
@@ -165,7 +166,7 @@
                             </div>
                             <div class="flex items-center gap-2">
                                 @if($cycle && $accessible)
-                                    <a class="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90" href="{{ route('ciclos.mostrar', $cycle) }}">Entrar</a>
+                                    <a class="inline-flex items-center rounded-xl bg-gradient-to-r from-primary to-secondary px-4 py-2 text-sm font-medium text-white shadow-sm hover:shadow-md transition-all duration-300" href="{{ route('ciclos.mostrar', $cycle) }}">Entrar</a>
                                 @else
                                     <span class="text-sm text-gray-400">Sin acceso</span>
                                 @endif
@@ -176,6 +177,7 @@
             @endif
         @endif
     </div>
+</div>
 </section>
 @endsection
 

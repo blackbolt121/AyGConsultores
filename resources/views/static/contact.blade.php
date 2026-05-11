@@ -119,7 +119,7 @@
             <div class="w-full lg:w-5/12 flex flex-col sm:flex-row lg:flex-col gap-8">
                 
                 {{-- Contact Info Card --}}
-                <div class="flex-1 bg-gradient-to-br from-primary to-indigo-700 rounded-3xl p-8 text-white shadow-xl shadow-primary/20 relative overflow-hidden flex flex-col justify-center">
+                <div class="flex-1 bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 text-white shadow-xl shadow-primary/20 relative overflow-hidden flex flex-col justify-center">
                     <div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
                         <svg class="w-32 h-32 transform rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 7h2v6h-2zm0 8h2v2h-2z"/></svg>
                     </div>

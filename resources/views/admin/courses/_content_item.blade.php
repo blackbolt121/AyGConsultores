@@ -19,7 +19,7 @@
       <div class="flex-1 min-w-0 flex items-start gap-3">
         <div class="mt-1 flex-shrink-0">
           @if($item->type === 'section')
-            <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm" title="Sección">S</div>
+            <div class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center font-bold text-sm" title="Sección">S</div>
           @elseif($item->type === 'unit')
             <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm" title="Unidad">U</div>
           @elseif($item->type === 'exercise')
@@ -79,12 +79,12 @@
         <div class="w-px h-4 bg-slate-200 mx-1"></div>
 
         {{-- Editar (modal) --}}
-        <button
-          type="button"
-          class="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-          title="Editar"
-          data-modal="edit"
-          data-payload='{{ json_encode([
+          <button
+            type="button"
+            class="p-1.5 rounded-lg text-slate-500 hover:text-secondary hover:bg-secondary/10 transition-colors"
+            title="Editar"
+            data-modal="edit"
+            data-payload='{{ json_encode([
             "action" => route("admin.courses.contents.update", [$course, $item]),
             "title" => $item->title,
             "type" => $item->type,

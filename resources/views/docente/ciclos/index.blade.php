@@ -10,7 +10,7 @@
                 </svg>
                 Volver al Dashboard
             </a>
-            <h1 class="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text text-transparent">
                 Mis Ciclos
             </h1>
             <p class="text-gray-500 mt-2">Ciclos asignados para gestionar material y acreditaciones.</p>

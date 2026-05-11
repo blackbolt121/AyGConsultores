@@ -8,7 +8,7 @@
   <link rel="icon" href="{{ asset('logo.svg') }}">
   @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-white text-slate-900">
+<body class="min-h-screen bg-slate-50/30 text-slate-900">
   <div class="flex flex-col min-h-screen">
     {{-- Header/Nav --}}
     @include('partials.navbar')

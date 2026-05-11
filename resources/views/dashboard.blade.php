@@ -2,13 +2,13 @@
 
 @section('content')
     {{-- Hero --}}
-    <section class="relative py-16 bg-gradient-to-b from-primary/10 to-secondary/10">
-        <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+    <section class="relative py-8 md:py-12 bg-gradient-to-b from-primary/10 to-secondary/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col items-center space-y-3 text-center">
-                <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-primary">
+                <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-primary">
                     Mis Solicitudes de Contacto
                 </h1>
-                <p class="max-w-[700px] text-gray-600 md:text-lg">
+                <p class="max-w-2xl text-slate-600 md:text-lg">
                     Estas son las solicitudes de contacto que has enviado con el correo
                     <span class="font-semibold text-primary">{{ $user->email }}</span>.
                 </p>
@@ -17,18 +17,14 @@
     </section>
 
     {{-- Listado --}}
-    <section class="py-12 bg-gradient-to-b from-white to-gray-50">
-        <div class="container mx-auto px-4 md:px-6 max-w-7xl">
+    <section class="py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @if ($contacts->count() === 0)
                 <div class="flex flex-col items-center justify-center py-16">
                     <div
-                        class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary">
+                        class="w-16 h-16 rounded-2xl bg-white shadow-sm border border-slate-200 flex items-center justify-center mb-4 text-primary">
                         {{-- Icono --}}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect width="20" height="14" x="2" y="5" rx="2" />
-                            <path d="M2 13h4l2 3h8l2-3h4" />
-                        </svg>
+                        <x-icon name="lucide-mail" class="w-8 h-8" />
                     </div>
                     <h2 class="text-xl font-semibold text-gray-800 mb-2">
                         No has enviado solicitudes aún
@@ -71,7 +67,7 @@
                                 };
                             @endphp
 
-                            <article class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 flex flex-col h-full p-4">
+                            <article class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 flex flex-col h-full transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
                                 <div class="flex items-start justify-between gap-3 mb-3">
                                     <div>
                                         <h3 class="text-sm font-semibold text-gray-900 line-clamp-2">
@@ -97,20 +93,15 @@
                                     </p>
                                 </div>
 
-                                <div class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100">
+                                <div class="mt-auto flex items-center justify-between pt-3 border-t border-slate-200">
                                     <span class="text-xs text-gray-500">
                                         ID #{{ $contact->id }}
                                     </span>
                                     {{-- Si quieres que solo sea lectura, deja este botón como "Ver más" sin ruta admin --}}
                                     <a href="{{ route('dashboard.show', $contact) }}"
-                                       class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-primary text-white hover:bg-primary/90 transition">
+                                       class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow-sm hover:shadow-md transition-all duration-300">
                                         Ver detalle completo
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 ml-1"
-                                             viewBox="0 0 24 24" fill="none"
-                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                             stroke-linejoin="round">
-                                            <path d="m9 18 6-6-6-6" />
-                                        </svg>
+                                        <x-icon name="lucide-chevron-right" class="w-3.5 h-3.5" />
                                     </a>
                                 </div>
                             </article>
@@ -118,7 +109,7 @@
                     </div>
 
                     {{-- Paginación --}}
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-200">
                         <div class="text-xs text-gray-500">
                             Página {{ $contacts->currentPage() }} de {{ $contacts->lastPage() }}
                         </div>

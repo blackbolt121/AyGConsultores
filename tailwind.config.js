@@ -8,14 +8,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#5272FF',   // Tu color azul
-        secondary: '#1C9AEA', // Tu color rosa
+        primary: '#203a5f',   // Tu color azul
+        secondary: '#2e5b9a', // Tu color rosa
+        tertiary: '#5a8bd6',
+        support: "#4a4a4a",
+        supportLight: "#fffffffb"
       },
       keyframes: {
         // de -12px (arriba) a 12px (abajo)
         'slide-y': {
-          from:   { transform: 'translateY(-12px)' },
-          to:     { transform: 'translateY(12px)'  },
+          from: { transform: 'translateY(-12px)' },
+          to: { transform: 'translateY(12px)' },
         },
       },
       animation: {

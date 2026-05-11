@@ -1,65 +1,60 @@
-<header class="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm">
-  <div class="container mx-auto max-w-7xl flex h-16 items-center justify-between px-4 md:px-6">
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur">
+  <div class="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
     <a href="{{ route('home') }}" class="flex items-center gap-2 group">
       <div class="relative w-10 h-10 overflow-hidden transform transition-transform duration-300 group-hover:scale-110">
         <img src="{{ asset('logo.svg') }}" alt="Logo" class="transition-transform duration-500 group-hover:rotate-12" width="40" height="40">
       </div>
       <span class="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
-        A&G Consultores
+        A&G Consultoría
       </span>
     </a>
 
     {{-- MENÚ DESKTOP --}}
-    <nav class="hidden md:flex gap-6">
+    <nav class="hidden md:flex items-center gap-7">
       <a href="{{ route('home') }}" class="text-sm font-medium relative group">
-        <span class="relative z-10 text-gray-700 group-hover:text-primary transition-colors">Inicio</span>
-        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all"></span>
+        <span class="relative z-10 text-slate-700 group-hover:text-primary transition-colors">Inicio</span>
+        <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary/80 group-hover:w-full transition-all"></span>
       </a>
       <a href="{{ route('courses.index') }}" class="text-sm font-medium relative group">
-        <span class="relative z-10 text-gray-700 group-hover:text-primary transition-colors">Cursos</span>
-        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all"></span>
+        <span class="relative z-10 text-slate-700 group-hover:text-primary transition-colors">Cursos</span>
+        <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary/80 group-hover:w-full transition-all"></span>
       </a>
       <a href="{{ route('about') }}" class="text-sm font-medium relative group">
-        <span class="relative z-10 text-gray-700 group-hover:text-primary transition-colors">Nosotros</span>
-        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all"></span>
+        <span class="relative z-10 text-slate-700 group-hover:text-primary transition-colors">Nosotros</span>
+        <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary/80 group-hover:w-full transition-all"></span>
       </a>
       <a href="{{ route('contacto.contacto') }}" class="text-sm font-medium relative group">
-        <span class="relative z-10 text-gray-700 group-hover:text-primary transition-colors">Contacto</span>
-        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all"></span>
+        <span class="relative z-10 text-slate-700 group-hover:text-primary transition-colors">Contacto</span>
+        <span class="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary/80 group-hover:w-full transition-all"></span>
       </a>
     </nav>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-3">
       @auth
         @if(Auth::user()->isAdmin())
-          <a href="{{ route('admin.index') }}" class="text-sm font-medium text-red-600 hover:text-red-700 transition px-2">
+          <a href="{{ route('admin.index') }}" class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-red-200 bg-white px-3 py-2 text-sm font-medium text-red-700 shadow-sm hover:bg-red-50 hover:shadow-md transition-all duration-300">
+            <x-icon name="lucide-shield" class="h-4 w-4" />
             Panel Admin
           </a>
         @endif
 
-        <a href="{{ route('account.edit') }}" class="text-sm font-medium text-gray-700 hover:text-primary transition px-2">
+        <a href="{{ route('account.edit') }}" class="hidden sm:inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 shadow-sm hover:shadow-md transition-all duration-300">
+          <x-icon name="lucide-user" class="h-4 w-4" />
           Mi cuenta
         </a>
 
-        <a href="{{ route('dashboard.index') }}" class="text-sm font-medium text-primary hover:text-primary/80 transition px-2 mr-2">
+        <a href="{{ route('dashboard.index') }}" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-primary to-secondary px-3 py-2 text-sm font-medium text-white shadow-sm hover:shadow-md transition-all duration-300">
+          <x-icon name="lucide-layout-dashboard" class="h-4 w-4" />
           Dashboard
         </a>
 
         <form
           method="POST"
           action="{{ route('logout', absolute: false) }}"
-          class="hidden md:flex items-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+          class="hidden md:inline-flex items-center gap-2 h-10 px-4 text-sm font-medium rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md hover:bg-slate-50 transition-all duration-300"
         >
           @csrf
-          <svg xmlns="http://www.w3.org/2000/svg"
-               fill="none"
-               viewBox="0 0 24 24"
-               stroke-width="2"
-               stroke="currentColor"
-               class="w-5 h-5 mr-2">
-            <path d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4z"/>
-            <path d="M4 20c0-2.2 3.6-4 8-4s8 1.8 8 4v1H4v-1z"/>
-          </svg>
+          <x-icon name="lucide-log-out" class="w-5 h-5" />
           <button type="submit">Cerrar Sesión</button>
         </form>
       @endauth
@@ -67,69 +62,51 @@
       @guest
         <a 
           href="{{ route('login.form') }}"
-          class="hidden md:flex items-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+          class="hidden md:inline-flex items-center gap-2 h-10 px-4 text-sm font-medium rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md hover:bg-slate-50 transition-all duration-300"
         >
-          <svg xmlns="http://www.w3.org/2000/svg"
-               fill="none"
-               viewBox="0 0 24 24"
-               stroke-width="2"
-               stroke="currentColor"
-               class="w-5 h-5 mr-2">
-            <path d="M12 12c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4z"/>
-            <path d="M4 20c0-2.2 3.6-4 8-4s8 1.8 8 4v1H4v-1z"/>
-          </svg>
+          <x-icon name="lucide-log-in" class="w-5 h-5" />
           Iniciar Sesión
         </a>
       @endguest
 
       {{-- BOTÓN MENÚ MÓVIL --}}
       <button id="mobile-menu-button"
-              class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-md border"
+              class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300"
               aria-label="Abrir menú"
               aria-expanded="false"
               type="button">
-        <svg xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 24 24"
-             fill="none"
-             stroke="currentColor"
-             stroke-width="2"
-             stroke-linecap="round"
-             stroke-linejoin="round"
-             class="w-5 h-5">
-          <line x1="4" y1="6" x2="20" y2="6"></line>
-          <line x1="4" y1="12" x2="20" y2="12"></line>
-          <line x1="4" y1="18" x2="20" y2="18"></line>
-        </svg>
+        <x-icon name="lucide-menu" class="w-5 h-5 text-slate-700" />
       </button>
     </div>
   </div>
 
   {{-- MENÚ MÓVIL --}}
-  <nav id="mobile-menu" class="md:hidden hidden border-t bg-white">
-    <div class="px-4 pt-2 pb-4 space-y-2">
-      <a href="{{ route('home') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+  <nav id="mobile-menu" class="md:hidden hidden border-t border-slate-200 bg-white/95 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-3 space-y-1">
+      <a href="{{ route('home') }}" class="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">
         Inicio
       </a>
-      <a href="{{ route('courses.index') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+      <a href="{{ route('courses.index') }}" class="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">
         Cursos
       </a>
-      <a href="{{ route('about') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+      <a href="{{ route('about') }}" class="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">
         Nosotros
       </a>
-      <a href="{{ route('contacto.contacto') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+      <a href="{{ route('contacto.contacto') }}" class="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">
         Contacto
       </a>
 
-      @auth
-        @if(Auth::user()->isAdmin())
-          <a href="{{ route('admin.index') }}" class="block text-sm font-medium text-red-600 hover:text-red-700">
+        @auth
+          @if(Auth::user()->isAdmin())
+          <a href="{{ route('admin.index') }}" class="block rounded-xl px-3 py-2 text-sm font-medium text-red-700 hover:bg-red-50 transition">
             Panel Admin
           </a>
-        @endif
-        <a href="{{ route('account.edit') }}" class="block text-sm font-medium text-gray-700 hover:text-primary">
+          @endif
+        <a href="{{ route('account.edit') }}" class="block rounded-xl px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-primary transition">
           Mi cuenta
         </a>
-        <a href="{{ route('dashboard.index') }}" class="block text-sm font-medium text-primary hover:text-primary/80">
+        <a href="{{ route('dashboard.index') }}" class="block rounded-xl px-3 py-2 text-sm font-medium text-primary hover:bg-primary/5 transition">
           Dashboard
         </a>
 
@@ -141,8 +118,9 @@
           @csrf
           <button
             type="submit"
-            class="w-full flex items-center justify-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+            class="w-full inline-flex items-center justify-center gap-2 h-10 px-4 text-sm font-medium rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md hover:bg-slate-50 transition-all duration-300"
           >
+            <x-icon name="lucide-log-out" class="h-4 w-4" />
             Cerrar Sesión
           </button>
         </form>
@@ -151,11 +129,13 @@
       @guest
         <a
           href="{{ route('login.form') }}"
-          class="mt-2 w-full flex items-center justify-center h-10 px-4 text-sm font-medium rounded-md border hover:bg-slate-50 transition"
+          class="mt-2 w-full inline-flex items-center justify-center gap-2 h-10 px-4 text-sm font-medium rounded-xl border border-slate-200 bg-white shadow-sm hover:shadow-md hover:bg-slate-50 transition-all duration-300"
         >
+          <x-icon name="lucide-log-in" class="h-4 w-4" />
           Iniciar Sesión
         </a>
       @endguest
+      </div>
     </div>
   </nav>
 </header>

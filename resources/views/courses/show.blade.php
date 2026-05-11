@@ -3,7 +3,7 @@
 @section('content')
 <section class="flex justify-center">
   <div class="py-10 text-center">
-    <h1 class="text-3xl font-bold sm:text-4xl bg-gradient-to-r from-primary via-secondary to-purple-600 bg-clip-text text-transparent">
+    <h1 class="text-3xl font-bold sm:text-4xl bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text text-transparent">
       {{ $course->title }}
     </h1>
     <p class="max-w-[700px] mx-auto text-gray-600 mt-2">

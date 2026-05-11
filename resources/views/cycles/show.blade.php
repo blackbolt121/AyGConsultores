@@ -38,6 +38,16 @@
             </div>
             <p class="text-gray-500 mt-1">Ciclo: <strong class="text-gray-900">{{ $cycle->name }}</strong></p>
 
+            <div class="mt-4">
+              <div class="flex items-center justify-between text-sm">
+                <p class="font-medium text-gray-900">Progreso</p>
+                <p class="text-gray-600">{{ $progressPercent ?? 0 }}% ({{ $progressCompleted ?? 0 }}/{{ $progressTotal ?? 0 }})</p>
+              </div>
+              <div class="mt-2 h-2.5 w-full rounded-full bg-slate-100 overflow-hidden">
+                <div class="h-full rounded-full bg-gradient-to-r from-primary to-secondary" style="width: {{ $progressPercent ?? 0 }}%"></div>
+              </div>
+            </div>
+
             <div class="mt-3 flex flex-wrap items-center gap-2 text-xs">
               <span class="inline-flex items-center rounded-xl border border-gray-200 bg-gray-50 px-3 py-1.5 text-gray-700">
                 <strong class="mr-1">Inicio:</strong> {{ $cycle->starts_at ? $cycle->starts_at->format('d/m/Y') : 'N/A' }}
@@ -65,7 +75,7 @@
 
             @if($roots->isNotEmpty())
               <div class="space-y-3">
-                @include('partials._cycle-content-tree', ['nodes' => $roots, 'cycle' => $cycle, 'materials' => $materials])
+                @include('partials._cycle-content-tree', ['nodes' => $roots, 'cycle' => $cycle, 'materials' => $materials, 'completedContentIds' => ($completedContentIds ?? [])])
               </div>
             @else
               <div class="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-gray-600">
