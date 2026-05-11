@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CourseCycle;
 use App\Models\Enrollment;
 use App\Models\User;
+use App\Models\CourseCycleMaterial;
+use App\Models\CourseCycleContentProgress;
 use Illuminate\Http\Request;
 
 class DocenteCycleStudentsController extends Controller
@@ -20,9 +22,48 @@ class DocenteCycleStudentsController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
+        $validMaterialContentIds = CourseCycleMaterial::query()
+            ->where('course_cycle_id', $ciclo->id)
+            ->where(function ($q) {
+                $q->where(function ($qq) {
+                    $qq->where('content_type', 'pdf')->whereNotNull('file_path');
+                })->orWhere(function ($qq) {
+                    $qq->where('content_type', 'text')
+                        ->whereNotNull('body')
+                        ->whereRaw('TRIM(body) <> ""');
+                });
+            })
+            ->pluck('course_content_id')
+            ->unique()
+            ->values();
+
+        $total = $validMaterialContentIds->count();
+
+        $completedCounts = CourseCycleContentProgress::query()
+            ->selectRaw('user_id, COUNT(*) as cnt')
+            ->where('course_cycle_id', $ciclo->id)
+            ->whereNotNull('completed_at')
+            ->whereIn('course_content_id', $validMaterialContentIds)
+            ->groupBy('user_id')
+            ->pluck('cnt', 'user_id')
+            ->all();
+
+        $progressByUser = [];
+        foreach ($enrollments as $enrollment) {
+            $uid = $enrollment->user_id;
+            $completed = (int) ($completedCounts[$uid] ?? 0);
+            $percent = $total > 0 ? (int) floor(($completed / $total) * 100) : 0;
+            $progressByUser[$uid] = [
+                'completed' => $completed,
+                'total' => $total,
+                'percent' => $percent,
+            ];
+        }
+
         return view('docente.ciclos.alumnos', [
             'cycle' => $ciclo,
             'enrollments' => $enrollments,
+            'progressByUser' => $progressByUser,
         ]);
     }
 

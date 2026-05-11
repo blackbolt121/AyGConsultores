@@ -98,6 +98,9 @@ Route::middleware(['auth', 'force.password.change', 'check.cycle.access'])->pref
     Route::get('/{ciclo}/material/{contenido}/descargar', [\App\Http\Controllers\CourseMaterialController::class, 'download'])
         ->middleware('signed')
         ->name('material.descargar');
+
+    Route::post('/{ciclo}/material/{contenido}/progreso/heartbeat', [\App\Http\Controllers\CourseMaterialController::class, 'heartbeat'])
+        ->name('material.progreso.heartbeat');
 });
 
 Route::prefix('docente')->name('docente.')->middleware(['auth', 'force.password.change'])->group(function () {

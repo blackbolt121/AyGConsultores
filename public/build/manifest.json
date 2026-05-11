@@ -1,13 +1,46 @@
 {
+  "_material-progress-CUbgJTQe.js": {
+    "file": "assets/material-progress-CUbgJTQe.js",
+    "name": "material-progress"
+  },
+  "node_modules/pdfjs-dist/build/pdf.worker.mjs": {
+    "file": "assets/pdf.worker-BgryrOlp.mjs",
+    "src": "node_modules/pdfjs-dist/build/pdf.worker.mjs"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-Di7Bvd8x.css",
+    "file": "assets/app-B7liMBbU.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-CcNNqum8.js",
+    "file": "assets/app-PCc9FRou.js",
     "name": "app",
     "src": "resources/js/app.js",
-    "isEntry": true
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/pdf-viewer.js",
+      "resources/js/text-viewer.js"
+    ]
+  },
+  "resources/js/pdf-viewer.js": {
+    "file": "assets/pdf-viewer-DNdMQUfH.js",
+    "name": "pdf-viewer",
+    "src": "resources/js/pdf-viewer.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_material-progress-CUbgJTQe.js"
+    ],
+    "assets": [
+      "assets/pdf.worker-BgryrOlp.mjs"
+    ]
+  },
+  "resources/js/text-viewer.js": {
+    "file": "assets/text-viewer-ClvqPnze.js",
+    "name": "text-viewer",
+    "src": "resources/js/text-viewer.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_material-progress-CUbgJTQe.js"
+    ]
   }
 }
