@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="max-w-6xl mx-auto px-4 py-6">
+  <div class="max-w-5xl mx-auto px-4 py-6">
     <div class="rounded-2xl border border-slate-200 bg-white shadow-sm px-4 py-4 sm:px-5 sm:py-5 mb-4">
       <div class="flex items-start justify-between gap-4">
         <div class="min-w-0">
@@ -15,18 +15,12 @@
           </div>
           <h1 class="text-2xl font-bold text-slate-900 truncate">{{ $content->title }}</h1>
           <div class="mt-2 flex flex-wrap items-center gap-2">
-            <span id="pdf-page-indicator-top" class="inline-flex items-center rounded-full bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10">Cargando...</span>
-            <span id="pdf-time-chip" class="inline-flex items-center rounded-full bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10">Tiempo activo: 0/30s</span>
-            <span id="pdf-last-page-chip" class="inline-flex items-center rounded-full bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10">Falta ultima pagina</span>
+            <span id="text-time-chip" class="inline-flex items-center rounded-full bg-slate-50 px-3 py-1 text-xs font-medium text-slate-700 ring-1 ring-inset ring-slate-700/10">Tiempo activo: 0/30s</span>
           </div>
+          <p class="mt-2 text-xs text-slate-500">Para completar: 30s de lectura activa.</p>
         </div>
 
-        <div class="shrink-0 flex items-center gap-2">
-          <div class="hidden sm:flex items-center rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
-            <button type="button" data-pdf-mode="scroll" class="px-3 py-1.5 rounded-lg text-xs font-medium">Scroll</button>
-            <button type="button" data-pdf-mode="paged" class="px-3 py-1.5 rounded-lg text-xs font-medium">Paginas</button>
-          </div>
-
+        <div class="shrink-0">
           <span
             id="material-status-badge"
             class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset {{ $isCompleted ? 'bg-emerald-50 text-emerald-700 ring-emerald-700/10' : 'bg-gray-50 text-gray-700 ring-gray-700/10' }}"
@@ -42,17 +36,10 @@
       </div>
     </div>
 
-    <div id="pdf-viewer" class="relative rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden" data-pdf-url="{{ $signedUrl }}" oncontextmenu="return false;">
-      <div id="pdf-toolbar" class="sm:hidden flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <div class="inline-flex items-center rounded-xl border border-slate-200 bg-white p-1 shadow-sm">
-          <button type="button" data-pdf-mode="scroll" class="px-3 py-1.5 rounded-lg text-xs font-medium">Scroll</button>
-          <button type="button" data-pdf-mode="paged" class="px-3 py-1.5 rounded-lg text-xs font-medium">Paginas</button>
-        </div>
-
-        <div class="text-xs text-slate-600" id="pdf-page-indicator"></div>
+    <div class="relative rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+      <div class="p-5 prose max-w-none">
+        {!! $body !!}
       </div>
-
-      <div id="pdf-container" class="w-full h-[80vh] overflow-auto bg-white"></div>
 
       <div id="material-paused-overlay" class="hidden absolute inset-0 bg-white/80 backdrop-blur-[1px]">
         <div class="h-full w-full flex items-center justify-center p-6">
@@ -72,10 +59,10 @@
 
   <script>
     window.__materialProgress = {
-      kind: 'pdf',
+      kind: 'text',
       heartbeatUrl: @json($heartbeatUrl),
       initialActiveSeconds: @json($initialActiveSeconds),
-      initialReachedLastPage: @json($initialReachedLastPage),
+      initialReachedLastPage: false,
       isCompleted: @json($isCompleted),
     };
   </script>
