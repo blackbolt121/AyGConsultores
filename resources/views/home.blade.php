@@ -5,7 +5,7 @@
 @section('content')
   <x-hero-agc
       :badge="'Transformando potencial en excelencia'"
-      :title="'A&G Consultores'"
+      :title="'A&G Consultoría'"
       :subtitle="'Capacitación y consultoría integral que coadyuva a descubrir el potencial humano a través de metodología integral colaborativa.'"
       :primary="['href' => route('courses.index'), 'label' => 'Explorar Cursos']"
       :secondary="['href' => route('about'), 'label' => 'Conocer Más']"
@@ -17,6 +17,7 @@
   />
 
   {{-- Hero con imagen --}}
+  {{--
   <section class="py-16 md:py-24">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-5xl mx-auto bg-white p-4 sm:p-6 rounded-3xl shadow-sm">
@@ -30,6 +31,7 @@
       </div>
     </div>
   </section>
+  --}}
   
   {{-- Nuestra Propuesta de Valor (secciones con tarjetas) --}}
   @include('home._propuesta')

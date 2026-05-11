@@ -20,7 +20,7 @@
                     <h2
                         class="text-3xl font-bold tracking-tighter sm:text-4xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-6">
                         Nuestra Presencia Global</h2>
-                    <p class="text-gray-600 text-lg mb-6">En A&amp;G Consultores, nos enorgullece haber impactado
+                    <p class="text-gray-600 text-lg mb-6">En A&amp;G Consultoría, nos enorgullece haber impactado
                         positivamente en el desarrollo humano de profesionales y organizaciones en diferentes partes del
                         mundo. Nuestra metodología única y enfoque colaborativo nos ha permitido trascender fronteras y
                         contribuir al crecimiento personal y profesional de miles de personas.</p>
@@ -188,14 +188,13 @@
           role="img"
           aria-label="Retrato de María de los Ángeles Aguiñaga Villaseñor"
           class="w-40 h-40 rounded-full bg-center bg-cover bg-no-repeat shrink-0 ring-1 ring-gray-200 shadow-sm mb-4"
-          style="background-image: url('{{ asset('images/professional-woman-portrait.png') }}');">
+          style="background-image: url('{{ asset('images/maria_de_los_angeles.jpeg') }}');">
         </div>
 
-        <h3 class="text-xl font-bold">María de los Ángeles Aguiñaga Villaseñor</h3>
-        <p class="text-primary mb-2">Investigadora/Profesora/Capacitadora</p>
+        <h3 class="text-xl font-bold">María de los Angeles Aguiñaga V.</h3>
+        <p class="text-primary mb-2">Directora General/Investigadora-Consultora/Profesora/Capacitadora</p>
         <p class="text-gray-600">
-          Doctora en Educación, Cédula profesional 13921929. Candidata al Doctorado en
-          Ciencias Administrativas, por la ESCA IPN.
+          Doctora en Educación, Cédula profesional 13921929 — ESCA IPN
         </p>
       </div>
 
