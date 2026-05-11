@@ -5,7 +5,7 @@
 @section('content')
   <x-hero-agc
       :badge="'Transformando potencial en excelencia'"
-      :title="'A&G Consultores'"
+      :title="'A&G Consultoría'"
       :subtitle="'Capacitación y consultoría integral que coadyuva a descubrir el potencial humano a través de metodología integral colaborativa.'"
       :primary="['href' => route('courses.index'), 'label' => 'Explorar Cursos']"
       :secondary="['href' => route('about'), 'label' => 'Conocer Más']"

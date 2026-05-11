@@ -3,7 +3,7 @@
     'badge' => 'Transformando potencial en excelencia',
 
     // Título principal
-    'title' => 'A&G Consultores',
+    'title' => 'A&G Consultoría',
 
     // Párrafo debajo del título
     'subtitle' => 'Capacitación y consultoría integral que coadyuva a descubrir el potencial humano a través de metodología integral colaborativa.',

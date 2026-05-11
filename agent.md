@@ -1,4 +1,4 @@
-# 🧠 Agent Instructions — A&G Consultores UI Refactor (Laravel + Tailwind)
+# 🧠 Agent Instructions — A&G Consultoría UI Refactor (Laravel + Tailwind)
 
 ## 🎯 Objective
 

@@ -1,13 +1,9 @@
 <header class="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 backdrop-blur">
   <div class="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-    <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-      <div class="relative w-10 h-10 overflow-hidden transform transition-transform duration-300 group-hover:scale-110">
-        <img src="{{ asset('logo.svg') }}" alt="Logo" class="transition-transform duration-500 group-hover:rotate-12" width="40" height="40">
-      </div>
-      <span class="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
-        A&G Consultoría
-      </span>
-    </a>
+    @include('partials.brand', [
+      'textClass' => 'text-primary',
+      'hoverTextClass' => 'group-hover:text-primary/80',
+    ])
 
     {{-- MENÚ DESKTOP --}}
     <nav class="hidden md:flex items-center gap-7">

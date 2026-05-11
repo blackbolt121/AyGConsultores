@@ -2,12 +2,14 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
       <div>
-        <a href="{{ route('home') }}" class="flex items-center gap-2 mb-4 group">
-          <div class="relative w-10 h-10 overflow-hidden transform transition-transform duration-300 group-hover:scale-110">
-            <img src="{{ asset('logo.svg') }}" alt="Logo" width="40" height="40" class="transition-transform duration-500 group-hover:rotate-12">
-          </div>
-          <span class="text-xl font-bold group-hover:text-primary transition-colors">A&amp;G Consultores</span>
-        </a>
+        <div class="mb-4">
+          @include('partials.brand', [
+            'textClass' => 'text-white',
+            'hoverTextClass' => 'group-hover:text-white/90',
+            // The SVG is dark; invert it on dark footer background.
+            'imgClass' => 'transition-transform duration-500 group-hover:rotate-12 filter brightness-0 invert',
+          ])
+        </div>
         <p class="text-white/75 mb-4 max-w-xs">
           Contribuimos en la búsqueda constante de la esencia del desarrollo humano a través de capacitación y consultoría integral y colaborativa.
         </p>
@@ -38,18 +40,6 @@
         <h3 class="text-lg font-semibold mb-4">Contacto</h3>
         <ul class="space-y-4 text-white/75">
           <li class="flex items-center">
-            <!-- Ícono map-pin -->
-            <svg xmlns="http://www.w3.org/2000/svg" 
-                 fill="none" viewBox="0 0 24 24" 
-                 stroke-width="2" stroke="currentColor" 
-                 class="w-10 h-10 mr-2 text-white/90">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M12 21c-4-4.5-7-8-7-11a7 7 0 1 1 14 0c0 3-3 6.5-7 11z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            Monte Sinaí #144-B, col. Vista Hermosa, Santiago de Querétaro
-          </li>
-          <li class="flex items-center">
             <!-- Ícono mail -->
             <svg xmlns="http://www.w3.org/2000/svg" 
                  fill="none" viewBox="0 0 24 24" 
@@ -60,14 +50,14 @@
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="m3 6 9 7 9-7"/>
             </svg>
-            info@agconsultores.com
+            contacto@aygconsultores.com.mx
           </li>
         </ul>
       </div>
     </div>
 
     <div class="mt-12 border-t border-white/15 pt-8 text-center text-sm text-white/70">
-      <p>© {{ now()->year }} A&amp;G Consultores. Todos los derechos reservados.</p>
+      <p>© {{ now()->year }} A&amp;G Consultoría. Todos los derechos reservados.</p>
     </div>
   </div>
 </footer>
